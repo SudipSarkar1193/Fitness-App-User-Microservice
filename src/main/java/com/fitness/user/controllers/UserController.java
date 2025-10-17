@@ -1,0 +1,49 @@
+package com.fitness.user.controllers;
+
+import com.fitness.user.dtos.RegisterUserRequestDTO;
+import com.fitness.user.dtos.UserResponseDTO;
+import com.fitness.user.services.contracts.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/users")
+@RequiredArgsConstructor
+public class UserController {
+
+    private final UserService userService;
+
+    @GetMapping("/")
+    ResponseEntity<Map<String, String>> healthCheck() {
+        Map<String, String> response = new HashMap<>();
+        response.put("status", "User Service is up and running");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/register")
+    ResponseEntity<UserResponseDTO> registerUser(@RequestBody RegisterUserRequestDTO requestDTO)  {
+        if (requestDTO == null) {
+            throw new IllegalStateException("Request body cannot be null");
+        }
+        UserResponseDTO responseDTO = null;
+        try {
+            responseDTO = userService.registerUser(requestDTO);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(responseDTO);
+    }
+
+    @GetMapping("/all")
+    ResponseEntity<List<UserResponseDTO>> getAllUsers() {
+        List<UserResponseDTO> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+}
