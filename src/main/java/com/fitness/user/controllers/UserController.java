@@ -3,6 +3,7 @@ package com.fitness.user.controllers;
 import com.fitness.user.dtos.RegisterUserRequestDTO;
 import com.fitness.user.dtos.ResponseDTO;
 import com.fitness.user.dtos.UserResponseDTO;
+import com.fitness.user.models.User;
 import com.fitness.user.services.contracts.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -40,6 +42,19 @@ public class UserController {
             throw new RuntimeException(e);
         }
         ResponseDTO responseDTO = new ResponseDTO(userResponseDTO,"User registered successfully");
+        return ResponseEntity.ok(responseDTO);
+    }
+    @GetMapping("/{uuid}")
+    ResponseEntity<ResponseDTO> getUserProfile(@PathVariable UUID uuid) {
+        if (uuid == null) {
+            throw new IllegalStateException("UUID cannot be null");
+        }
+
+        UserResponseDTO userResponseDTO = userService.getUserByUuid(uuid);
+
+        ResponseDTO responseDTO = new ResponseDTO(userResponseDTO,
+                "User profile fetched successfully");
+
         return ResponseEntity.ok(responseDTO);
     }
 

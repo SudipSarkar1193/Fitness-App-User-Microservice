@@ -5,6 +5,7 @@ import com.fitness.user.dtos.UserResponseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public interface UserService {
@@ -12,4 +13,6 @@ public interface UserService {
     UserResponseDTO registerUser(RegisterUserRequestDTO requestDTO) ;
 
     List<UserResponseDTO> getAllUsers();
+
+    UserResponseDTO getUserByUuid(UUID uuid);
 }

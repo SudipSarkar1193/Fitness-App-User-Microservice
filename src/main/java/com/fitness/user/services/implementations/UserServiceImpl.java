@@ -64,6 +64,16 @@ public class UserServiceImpl implements UserService {
         return userDtoList;
     }
 
+    @Override
+    public UserResponseDTO getUserByUuid(UUID uuid) {
+        if(uuid == null) {
+            throw new IllegalStateException("UUID cannot be null");
+        }
+        User user = userRepository.findUserByUuid(uuid)
+                .orElseThrow(() -> new IllegalStateException("User not found with UUID: " + uuid));
+        return mapUserToUserResponseDTO(user);
+    }
+
     private UserResponseDTO mapUserToUserResponseDTO(User user) {
         UserResponseDTO responseDTO = new UserResponseDTO();
         responseDTO.setUuid(user.getUuid());
