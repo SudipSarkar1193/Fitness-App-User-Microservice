@@ -1,8 +1,10 @@
 package com.fitness.user.controllers;
 
 import com.fitness.user.dtos.RegisterUserRequestDTO;
+import com.fitness.user.dtos.ResponseDTO;
 import com.fitness.user.dtos.UserResponseDTO;
 import com.fitness.user.services.contracts.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,16 +29,17 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    ResponseEntity<UserResponseDTO> registerUser(@RequestBody RegisterUserRequestDTO requestDTO)  {
+    ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid RegisterUserRequestDTO requestDTO)  {
         if (requestDTO == null) {
             throw new IllegalStateException("Request body cannot be null");
         }
-        UserResponseDTO responseDTO = null;
+        UserResponseDTO userResponseDTO = null;
         try {
-            responseDTO = userService.registerUser(requestDTO);
+            userResponseDTO = userService.registerUser(requestDTO);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        ResponseDTO responseDTO = new ResponseDTO(userResponseDTO,"User registered successfully");
         return ResponseEntity.ok(responseDTO);
     }
 

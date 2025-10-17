@@ -7,10 +7,8 @@ import com.fitness.user.respositories.UserRepository;
 import com.fitness.user.services.contracts.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -22,9 +20,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDTO registerUser(RegisterUserRequestDTO requestDTO)  {
 
-        if(requestDTO == null) {
-            return null;
-        }
+        System.out.println("Registering user with email: " + requestDTO.getEmail());
+
 
         if(userRepository.existsByEmail(requestDTO.getEmail())) {
             throw new IllegalStateException("Email already exists");
