@@ -1,7 +1,7 @@
 spring:
 
   application:
-    name: USERSERVICE
+    name: userservice
 
   datasource:
     url: jdbc:mysql://localhost:3306/fitness-user-db

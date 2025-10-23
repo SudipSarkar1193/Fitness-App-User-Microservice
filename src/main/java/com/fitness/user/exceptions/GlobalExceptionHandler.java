@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 @ControllerAdvice // This annotation makes it a global exception handler
 @Slf4j
