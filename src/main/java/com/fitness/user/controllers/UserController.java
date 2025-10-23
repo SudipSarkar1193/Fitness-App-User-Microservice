@@ -64,10 +64,10 @@ public class UserController {
             throw new IllegalStateException("UUID cannot be null");
         }
         boolean isValid = userService.isValidUser(uuid);
-
+        Map<String,Boolean> mp = new HashMap<>();
+        mp.put("isValid",isValid);
         return ResponseEntity.ok(
-                new ResponseDTO(new HashMap<>().put("isValid",isValid),
-                "User validated successfully")
+                new ResponseDTO(mp, "User validated successfully")
         );
     }
 
