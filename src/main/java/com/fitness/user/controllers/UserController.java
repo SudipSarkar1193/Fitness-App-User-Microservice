@@ -59,15 +59,20 @@ public class UserController {
     }
 
     @GetMapping("/{uuid}/validate")
-    ResponseEntity<ResponseDTO> validateUserProfile(@PathVariable UUID uuid) {
+    ResponseEntity<Boolean> validateUserProfile(@PathVariable UUID uuid) {
+
+        System.out.println();
+        System.out.println("Validating user profile" + uuid);
+        System.out.println();;
+
         if (uuid == null) {
             throw new IllegalStateException("UUID cannot be null");
         }
         boolean isValid = userService.isValidUser(uuid);
-        Map<String,Boolean> mp = new HashMap<>();
-        mp.put("isValid",isValid);
+//        Map<String,Boolean> mp = new HashMap<>();
+//        mp.put("isValid",isValid);
         return ResponseEntity.ok(
-                new ResponseDTO(mp, "User validated successfully")
+                isValid
         );
     }
 
