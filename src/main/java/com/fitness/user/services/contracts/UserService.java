@@ -15,4 +15,6 @@ public interface UserService {
     List<UserResponseDTO> getAllUsers();
 
     UserResponseDTO getUserByUuid(UUID uuid);
+
+    boolean isValidUser(UUID uuid);
 }

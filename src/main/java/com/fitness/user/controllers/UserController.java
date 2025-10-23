@@ -58,6 +58,19 @@ public class UserController {
         return ResponseEntity.ok(responseDTO);
     }
 
+    @GetMapping("/{uuid}/validate")
+    ResponseEntity<ResponseDTO> validateUserProfile(@PathVariable UUID uuid) {
+        if (uuid == null) {
+            throw new IllegalStateException("UUID cannot be null");
+        }
+        boolean isValid = userService.isValidUser(uuid);
+
+        return ResponseEntity.ok(
+                new ResponseDTO(new HashMap<>().put("isValid",isValid),
+                "User validated successfully")
+        );
+    }
+
     @GetMapping("/all")
     ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         List<UserResponseDTO> users = userService.getAllUsers();
